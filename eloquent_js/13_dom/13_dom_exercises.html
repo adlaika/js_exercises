@@ -1,0 +1,73 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Chapter 13: DOM Exercises</title>
+  </head>
+  <body>
+    <style>
+      /*cleaner look for tables*/
+     table        { border-collapse: collapse; }
+     td, th       { border: 1px solid black; padding: 3px 8px; }
+     th           { text-align: left; }
+     td.onlyNums  { text-align: right;}
+    </style>
+
+    <script type="text/javascript">
+      var MOUNTAINS = [
+        {name: "Kilimanjaro", height: 5895, country: "Tanzania"},
+        {name: "Everest", height: 8848, country: "Nepal"},
+        {name: "Mount Fuji", height: 3776, country: "Japan"},
+        {name: "Mont Blanc", height: 4808, country: "Italy/France"},
+        {name: "Vaalserberg", height: 323, country: "Netherlands"},
+        {name: "Denali", height: 6168, country: "United States"},
+        {name: "Popocatepetl", height: 5465, country: "Mexico"}
+      ];
+
+      var FOOD = [
+        {name: "Sushi", cost: 10, country: 'Japan'},
+        {name: "Pad Thai", cost: 5, country: 'Thailand'},
+        {name: "Burger", cost: 3, country: 'USA'},
+        {name: "Injera", cost: 2, country: 'Ethiopia'},
+        {name: "Criossant", cost: 1, country: 'France'}
+      ];
+
+      function buildTable(data) {
+        //create table to attach stuff to
+        var newTable = document.createElement('table');
+        //create first row, which will contain column titles, and append to table
+        var titleRow = document.createElement('tr');
+        newTable.appendChild(titleRow);
+
+        //create column titles
+        for(var key in data[0]){
+          var currentTitleCell = document.createElement('th');
+          titleRow.appendChild(currentTitleCell);
+          var currentTitleContent = document.createTextNode(key);
+          currentTitleCell.appendChild(currentTitleContent);
+        };
+
+        //traverse data to create cells and content
+        for(var i = 0; i < data.length; i++){
+          var currentRow = document.createElement('tr');
+          newTable.appendChild(currentRow);
+          for (var key in data[i]){
+            var currentCell = document.createElement('td');
+            currentRow.appendChild(currentCell);
+            var currentContent = document.createTextNode(data[i][key]);
+            var str = data[i][key].toString();
+            if(str.match(/^[0-9]*$/)){
+              currentCell.setAttribute("class", "onlyNums");
+            };
+            currentCell.appendChild(currentContent);
+          };
+        };
+
+        return newTable;
+      }
+
+      document.body.appendChild(buildTable(MOUNTAINS));
+      document.body.appendChild(document.createElement('p'));
+      document.body.appendChild(buildTable(FOOD));
+    </script>
+  </body>
+</html>
