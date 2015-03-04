@@ -1,0 +1,40 @@
+<!doctype html>
+<html>
+  <body>
+    <h1>Heading with a <span>span</span> element.</h1>
+    <p>A paragraph with <span>one</span>, <span>two</span>
+      spans.</p>
+
+    <script>
+    //produces list of all descendant nodes of given tag (e.g. <h1> or <span>)
+    function byTagName(node, tagName) {
+      var result = [];
+      var tagName = tagName.toLowerCase();
+
+      function search(node) {
+        for (var i = 0; i < node.childNodes.length; i++) {
+          currentChild = node.childNodes[i];
+          if (currentChild.nodeType == document.ELEMENT_NODE) {
+            if (currentChild.tagName.toLowerCase() == tagName) {
+              result.push(currentChild.tagName);
+            }
+            search(currentChild);
+          }
+        }
+      }
+
+      search(node);
+      return result;
+    }
+
+    console.log(byTagName(document.body, "h1").length);
+    // → 1
+    console.log(byTagName(document.body, "span").length);
+    // → 3
+    var para = document.querySelector("p");
+    console.log(byTagName(para, "span").length);
+    // → 2
+    </script>
+
+  </body>
+</html>

@@ -1,0 +1,46 @@
+<!doctype html>
+<html>
+  <body>
+    <div id="wrapper">
+      <div data-tabname="one">Tab one</div>
+      <div data-tabname="two">Tab two</div>
+      <div data-tabname="three">Tab three</div>
+    </div>
+    <script>
+      function asTabs(node) { //creates tabbed interface, using data-tabname attr as tab name
+        var tabs = [];
+        for(var i = 0; i < node.childNodes.length; i++) { //create array of tabs to use in leiu of live doc
+          var child = node.childNodes[i];
+          if (child.nodeType == document.ELEMENT_NODE)
+            tabs.push(child);
+        }
+
+        var tabList = document.createElement("div");
+        tabs.forEach(function(current, i){ //build tabList div w/ buttons as tabs
+          var newButton = document.createElement("button");
+          newButton.textContent = current.getAttribute("data-tabname");
+          newButton.addEventListener("click", function() { selectTab(i); });
+          tabList.appendChild(newButton);
+        });
+        node.insertBefore(tabList, node.firstChild);
+
+        function selectTab(n) { //tab selection functionality--click diplays tab and undisplays others
+          tabs.forEach(function(tab, i){
+            if (i == n)
+              tab.style.display = "";
+            else
+              tab.style.display = "none";
+          });
+          for (var i = 0; i < tabList.childNodes.length; i++){ //style selected tab
+            if (i == n)
+              tabList.childNodes[i].style.background = "green";
+            else
+              tabList.childNodes[i].style.background = "";
+          }
+        }
+        selectTab(0); //first tab is default selected
+      }
+      asTabs(document.querySelector("#wrapper"));
+    </script>
+  </body>
+</html>

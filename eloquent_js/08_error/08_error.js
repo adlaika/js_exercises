@@ -11,9 +11,9 @@ var context = null;
 function withContext(newContext, body) {
     var oldContext = context;
     context = newContext;
-    var result = body();
+    var tagNameArray = body();
     context = oldContext;
-    return result;
+    return tagNameArray;
 }
 
 function withContext(newContext, body) {
@@ -34,10 +34,10 @@ InputError.prototype = Object.create(Error.prototype);
 InputError.prototype.name = "InputError";
 
 function promptDirection(question) {
-    var result = prompt(question, "");
-    if (result.toLowerCase() == "left") return "L";
-    if (result.toLowerCase() == "right") return "R";
-    throw new InputError("Invalid direction: " + result);
+    var tagNameArray = prompt(question, "");
+    if (tagNameArray.toLowerCase() == "left") return "L";
+    if (tagNameArray.toLowerCase() == "right") return "R";
+    throw new InputError("Invalid direction: " + tagNameArray);
 }
 
 var box = {
